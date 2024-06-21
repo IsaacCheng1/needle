@@ -138,7 +138,9 @@ class SoftmaxLoss(Module):
 
         loss = ops.logsumexp(logits, axes=(1,)) - (one_hot_Y * logits).sum(axes=(1,))
 
-        return loss.sum() / B
+        loss = loss.sum() / B
+
+        return loss
 
 class BatchNorm1d(Module):
     def __init__(self, dim, eps=1e-5, momentum=0.1, device=None, dtype="float32"):

@@ -136,6 +136,12 @@ class Value:
         self.inputs = inputs
         self.num_outputs = num_outputs
         self.cached_data = cached_data
+
+        # special handling for Mac_OS X86_64
+        if self.cached_data is not None:
+            if self.cached_data.dtype == 'float64':
+                self.cached_data = array_api.float32(self.cached_data)
+
         self.requires_grad = requires_grad
 
     @classmethod
@@ -339,7 +345,8 @@ class Tensor(Value):
         if isinstance(other, Tensor):
             return needle.ops.EWiseDiv()(self, other)
         else:
-            return needle.ops.DivScalar(other)(self)
+            debug = needle.ops.DivScalar(other)(self)
+            return debug
 
     def __matmul__(self, other):
         return needle.ops.MatMul()(self, other)
