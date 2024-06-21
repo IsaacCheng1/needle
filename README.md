@@ -1,4 +1,4 @@
 simply run
 ```
-python softmax_regression.py
+python mlp_resnet.py
 ```
